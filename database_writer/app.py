@@ -69,7 +69,8 @@ def main():
         bootstrap_servers=kafka_bootstrap_servers,
         auto_offset_reset='earliest',
         group_id='database_writer_group',
-        value_deserializer=lambda m: json.loads(m.decode('utf-8'))
+        value_deserializer=lambda m: json.loads(m.decode('utf-8')),
+        fetch_max_wait_ms=500      # Maximum time in ms the consumer will wait for records
     )
 
     logger.info(f"Начинаем слушать топик '{kafka_topic}'...")

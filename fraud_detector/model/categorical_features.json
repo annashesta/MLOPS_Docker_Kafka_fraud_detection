@@ -1,0 +1,10 @@
+{
+    "categorical_features": [
+        "merch",
+        "cat_id",
+        "gender",
+        "one_city",
+        "us_state",
+        "jobs"
+    ]
+}

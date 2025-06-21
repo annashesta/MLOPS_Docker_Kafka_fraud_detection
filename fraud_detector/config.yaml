@@ -1,0 +1,43 @@
+# Версия конфига
+version: 2.0
+# Пути к директориям
+paths:
+  input_dir: /app/input
+  model_path: /app/model/catboost_model.cbm
+  train_data_path: /app/train_data/train.csv
+  threshold_path: /app/model/threshold.json
+  categorical_features_path: /app/model/categorical_features.json
+# Настройки модели
+model:
+  name: "CatBoostClassifier"
+  version: "1.2.8"
+  params:
+    iterations: 1000
+    depth: 6
+    learning_rate: 0.1
+    loss_function: "Logloss"
+    random_state: 42
+  preprocessing:
+    missing_value_strategy: "median"
+# Безопасность
+security:
+  file_restrictions:
+    allowed_extensions: [".csv"]
+    max_size_mb: 50
+    required_columns: ["transaction_time", "amount", "gender", "merch", "cat_id"]
+# Категориальные признаки
+features:
+  categorical: []
+  numerical: ["amount", "population_city"]
+  to_drop:
+    - "name_1"
+    - "name_2"
+    - "street"
+    - "post_code"
+# Логирование
+logging:
+  level: "INFO"
+  file: "/app/logs/service.log"
+  rotation:
+    max_size_mb: 10
+    backup_count: 3

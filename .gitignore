@@ -1,0 +1,59 @@
+# Виртуальные окружения
+/venv/
+*.venv/
+env/
+venv/
+ENV/
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Логи и артефакты
+*.log
+logs/
+__pycache__/
+*.py[cod]
+
+# Данные (если они не нужны в репозитории)
+input/*.csv
+output/*.csv
+train_data/*.csv
+train_data/*.json
+
+# IDE и локальные настройки
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Файлы сборки и временные файлы
+build/
+dist/
+*.egg-info/
+.tox/
+.coverage
+coverage.xml
+htmlcov/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Исключаем конкретные файлы, если необходимо
+catboost_model.cbm  # Возврашаем, так как лимит LFS исчерпан
+/catboost_info
+
+# Папки с датасетами
+# input/
+# output/
+# train_data/
+
+
+output/feature_importance.json
+output/predictions_distribution.png
+*.csvvenv/
+.venv/
+*.csv
+model/catboost_model.cbm
+.mypy_cache

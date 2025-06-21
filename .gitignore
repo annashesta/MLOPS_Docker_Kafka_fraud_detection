@@ -55,5 +55,5 @@ output/predictions_distribution.png
 *.csvvenv/
 .venv/
 *.csv
-model/catboost_model.cbm
 .mypy_cache
+fraud_detector/model/catboost_model.cbm

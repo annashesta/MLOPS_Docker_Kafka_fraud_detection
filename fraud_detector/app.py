@@ -9,7 +9,6 @@ import pandas as pd
 from kafka import KafkaConsumer, KafkaProducer, errors
 
 from src.preprocess import run_preproc
-# vvv ИЗМЕНЕНИЕ ЗДЕСЬ vvv
 from src.scorer import initialize_scorer, make_pred
 from src.config import load_config
 
@@ -68,12 +67,14 @@ def main():
             bootstrap_servers=kafka_bootstrap_servers,
             auto_offset_reset='earliest',
             group_id='fraud_detector_group',
-            value_deserializer=lambda m: json.loads(m.decode('utf-8'))
+            value_deserializer=lambda m: json.loads(m.decode('utf-8')),
+            fetch_max_wait_ms=500      # Максимальное время ожидания записей
         )
         
         producer = KafkaProducer(
             bootstrap_servers=kafka_bootstrap_servers,
-            value_serializer=lambda v: json.dumps(v).encode('utf-8')
+            value_serializer=lambda v: json.dumps(v).encode('utf-8'),
+            acks='all' # Ждем подтверждения от всех брокеров
         )
 
         logger.info(f"Начинаем слушать топик '{transactions_topic}'...")
@@ -96,14 +97,21 @@ def main():
                 processed_df = run_preproc(df)
                 score, fraud_flag = make_pred(processed_df)
                 
-                # Формирование и отправка результата
+                # Формирование результата
                 result = {
                     "transaction_id": transaction_id,
                     "score": score,
                     "fraud_flag": bool(fraud_flag) # Преобразуем в bool для JSON
                 }
                 
-                producer.send(scoring_topic, value=result)
+                # Сериализуем сообщение, чтобы проверить его размер
+                serialized_result = json.dumps(result).encode('utf-8')
+                logger.debug(f"Сериализованный результат для {transaction_id}: {serialized_result[:50]}... (длина {len(serialized_result)} байт)")
+
+                # Отправка и немедленная очистка буфера
+                producer.send(scoring_topic, value=result) # Отправляем Python-объект, сериализатор сделает остальное
+                producer.flush() # !!! Важное изменение: Принудительно отправляем сообщения !!!
+                
                 logger.info(f"Результат для транзакции {transaction_id} отправлен в топик '{scoring_topic}'.")
 
             except Exception as e:

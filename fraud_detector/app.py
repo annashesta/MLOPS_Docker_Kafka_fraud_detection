@@ -67,8 +67,7 @@ def main():
             bootstrap_servers=kafka_bootstrap_servers,
             auto_offset_reset='earliest',
             group_id='fraud_detector_group',
-            value_deserializer=lambda m: json.loads(m.decode('utf-8')),
-            fetch_max_wait_ms=500      # Максимальное время ожидания записей
+            value_deserializer=lambda m: json.loads(m.decode('utf-8'))
         )
         
         producer = KafkaProducer(

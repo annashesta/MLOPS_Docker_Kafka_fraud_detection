@@ -152,7 +152,7 @@ docker-compose up --build -d
  - **Kafka UI**: Просматривайте сообщения в топиках `transactions` и `scoring`.
  - **Логи обработки**: `/app/logs/service.log` внутри контейнера `fraud_detector`.
 
-### 3. Результаты:
+### 4. Результаты:
  - Скоринговые оценки пишутся в топик `scoring` в формате:
     ```json
     {
@@ -161,6 +161,7 @@ docker-compose up --build -d
       "transaction_id": "d6b0f7a0-8e1a-4a3c-9b2d-5c8f9d1e2f3a"
     }
     ```
+
 
 
 ## Остановка Проекта

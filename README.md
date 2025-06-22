@@ -138,7 +138,8 @@ docker-compose up --build -d
     transaction_time,amount,lat,lon,merchant_lat,merchant_lon,gender,...
     2023-01-01 12:30:00,150.50,40.7128,-74.0060,40.7580,-73.9855,M,...
     ```
--  Для теста на диске представлены файлы test.csv: маленький (23 транзакции) и большой(262144 транзакции)
+-  Для теста на диске [Google Drive](https://drive.google.com/drive/folders/1D1dpfcPAHQvUd8FOuyAc4DyJ27TZMNlk?usp=sharing)
+ представлены файлы test.csv: маленький (23 транзакции) и большой(262144 транзакции)
 
 ### 2. Обработка данных:
 - Нажмите  **"Отправить транзакции на обработку"** 
